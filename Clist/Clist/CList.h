@@ -23,6 +23,7 @@ typedef	struct MyList
 {
 	ListNode_t* node;
 	unsigned int valueSize;
+	unsigned int nodeNum;
 }MyList_t;
 #elif LIST_TYPE == 1
 typedef enum ListStatus
@@ -43,6 +44,7 @@ typedef	struct MyList
 {
 	ListNode_t* node;
 	unsigned int valueSize;
+	unsigned int nodeNum;
 }MyList_t;
 #endif
 

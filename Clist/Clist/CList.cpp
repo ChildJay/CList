@@ -18,6 +18,7 @@ MyList_t* myList_Init(int size)
 	list = (MyList_t*)malloc(sizeof(MyList_t));
 	list->node = NULL;
 	list->valueSize = size;
+	list->nodeNum = 0;
 	return list;
 }
 
@@ -199,6 +200,7 @@ void myList_append(MyList_t* list, void* value)
 	{
 		myList_lastNode(list)->next = dataList;
 	}
+	list->nodeNum++;
 }
 
 void myList_insert(MyList_t* list, unsigned int index, void* value)
@@ -232,6 +234,7 @@ void myList_insert(MyList_t* list, unsigned int index, void* value)
 		myList_atNode(list, index - 1)->next = dataList;
 		dataList->next = dataListTemp;
 	}
+	list->nodeNum++;
 }
 
 ListNode_t* myList_swap(MyList_t* list)
@@ -352,6 +355,7 @@ void myList_removeAll(MyList_t* list)
 		free(dataListTmp);
 	}
 	list->node = NULL;
+	list->nodeNum = 0;
 }
 
 void myList_removeAt(MyList_t* list, unsigned int index)
@@ -388,6 +392,7 @@ void myList_removeAt(MyList_t* list, unsigned int index)
 
 	free(dataList->value);
 	free(dataList);
+	list->nodeNum--;
 }
 
 void myList_removeBetween(MyList_t* list, unsigned int indexBegin, unsigned int indexEnd)
@@ -429,11 +434,13 @@ void myList_removeBetween(MyList_t* list, unsigned int indexBegin, unsigned int 
 			myList_removeAt(list, indexBegin);
 		}
 	}
+	list->nodeNum -= indexEnd - indexBegin + 1;
 }
 
 void myList_removeOne(MyList_t* list, void* value)
 {
 	myList_removeAt(list, myList_indexOf(list, value));
+	list->nodeNum--;
 }
 
 void myList_clear(MyList_t* list)
@@ -441,6 +448,7 @@ void myList_clear(MyList_t* list)
 	myList_removeAll(list);
 	list->node = NULL;
 	list->valueSize = 0;
+	list->nodeNum = 0;
 	free(list);
 }
 
@@ -462,6 +470,7 @@ MyList_t* myList_Init(int size)
 	list = (MyList_t*)malloc(sizeof(MyList_t));
 	list->node = NULL;
 	list->valueSize = size;
+	list->nodeNum = 0;
 	return list;
 }
 
@@ -679,6 +688,7 @@ void myList_append(MyList_t* list, void* value)
 		dataList->next = list->node;
 		list->node->before = dataList;
 	}
+	list->nodeNum++;
 }
 
 void myList_insert(MyList_t* list, unsigned int index, void* value)
@@ -712,6 +722,7 @@ void myList_insert(MyList_t* list, unsigned int index, void* value)
 	{
 		list->node = dataList;
 	}
+	list->nodeNum++;
 }
 
 ListNode_t* myList_swap(MyList_t* list)
@@ -868,6 +879,7 @@ void myList_removeAll(MyList_t* list)
 		free(dataListTmp);
 	}
 	list->node = NULL;
+	list->nodeNum = 0;
 }
 
 void myList_removeAt(MyList_t* list, unsigned int index)
@@ -899,6 +911,7 @@ void myList_removeAt(MyList_t* list, unsigned int index)
 	}
 	free(dataList->value);
 	free(dataList);
+	list->nodeNum--;
 }
 
 void myList_removeBetween(MyList_t* list, unsigned int indexBegin, unsigned int indexEnd)
@@ -954,12 +967,13 @@ void myList_removeBetween(MyList_t* list, unsigned int indexBegin, unsigned int 
 		}
 
 	}
-
+	list->nodeNum -= indexEnd - indexBegin + 1;
 }
 
 void myList_removeOne(MyList_t* list, void* value)
 {
 	myList_removeAt(list, myList_indexOf(list, value));
+	list->nodeNum--;
 }
 
 void myList_clear(MyList_t* list)
@@ -967,6 +981,7 @@ void myList_clear(MyList_t* list)
 	myList_removeAll(list);
 	list->node = NULL;
 	list->valueSize = 0;
+	list->nodeNum = 0;
 	free(list);
 }
 
